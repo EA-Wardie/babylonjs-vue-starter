@@ -1,7 +1,7 @@
 <template>
   <div>
     <game-renderer></game-renderer>
-    <game-menu id="gameMenu"></game-menu>
+    <game-menu id="gameMenu" v-if="false"></game-menu>
   </div>
 </template>
 
@@ -12,7 +12,6 @@ import GameMenu from "@/framework/GameMenu";
 export default {
   name: "App",
   components: { GameRenderer, GameMenu },
-
 };
 </script>
 
