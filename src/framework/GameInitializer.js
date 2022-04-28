@@ -66,9 +66,8 @@ export default {
 
         //Meshes
         createPlayer() {
-            this.player = MeshBuilder.CreateBox('player', {size: 0.5}, this.scene);
-            this.player.position.y = 0.5;
-
+            this.player = MeshBuilder.CreateBox('player', {size: 0.1, height: 1.5}, this.scene);
+            // this.player.position.y = 5;
             // this.registerPlayerAsPhysicsImposter();
         },
         generateVoxelTerrain() {
@@ -92,9 +91,9 @@ export default {
             voxel.dispose();
             this.ground = sps.buildMesh();
             sps.initParticles = () => {
+                let row = 0;
                 const sqrtSize = Math.sqrt(totalVoxels).toFixed(0),
                     heightMap = this.getPerlinNoiseHeightMap(sqrtSize, sqrtSize);
-                let row = 0;
 
                 for (let p = 0; p < sps.nbParticles; p++) {
                     const col = -(-p % sqrtSize),
@@ -120,15 +119,30 @@ export default {
             grassMaterial.diffuseTexture = new Texture('./assets/textures/stone.png');
             this.ground.material = grassMaterial;
 
-            if(this.player.intersectsMesh(this.ground)) {
-                this.player.position.y = 2;
-            }
+            this.registerSPSEventSystem(sps);
+        },
+        registerSPSEventSystem(sps) {
+            this.scene.onPointerDown = (event, result) => {
+                const id = result.faceId;
+
+                console.log(result);
+                if(id !== -1) {
+                    const picked = sps.pickedParticle(result),
+                        index = picked.idx,
+                        particle = sps.particles[index];
+
+                    console.log(picked, index, particle);
+                    this.player.position.x = particle.position.x;
+                    this.player.position.z = particle.position.z;
+                    this.player.position.y = particle.position.y;
+                }
+            };
         },
         registerVoxelTerrainAsPhysicsImposter() {
-            this.ground.physicsImpostor = new PhysicsImpostor(this.ground, PhysicsImpostor.BoxImpostor, {mass: 0, friction: 0.5, restitution: 0}, this.scene);
+            this.ground.physicsImpostor = new PhysicsImpostor(this.ground, PhysicsImpostor.BoxImpostor, {mass: 0, friction: 0.5, restitution: 1}, this.scene);
         },
         registerPlayerAsPhysicsImposter() {
-            this.player.physicsImpostor = new PhysicsImpostor(this.player, PhysicsImpostor.BoxImpostor, {mass: 0.1, restitution: 0}, this.scene);
+            this.player.physicsImpostor = new PhysicsImpostor(this.player, PhysicsImpostor.SphereImpostor, {mass: 0.1, restitution: 1}, this.scene);
         },
         getPerlinNoiseHeightMap(width, height) {
             const generator = new MapGenerator(Math.random(), {type: 'perlin'});
