@@ -1,17 +1,116 @@
 <template>
-  <div>
-    <game-renderer></game-renderer>
-    <game-menu id="gameMenu" v-if="false"></game-menu>
-  </div>
+  <canvas></canvas>
 </template>
 
 <script>
-import GameRenderer from "@/framework/GameRenderer";
-import GameMenu from "@/framework/GameMenu";
+import {
+  ActionManager, AssetsManager,
+  Engine,
+  ExecuteCodeAction,
+  FreeCamera,
+  HemisphericLight,
+  MeshBuilder,
+  Scene, SpriteMap, Texture, Vector2,
+  Vector3
+} from '@babylonjs/core';
 
 export default {
   name: "App",
-  components: { GameRenderer, GameMenu },
+  methods: {
+    initGame() {
+      //Engine
+      const engine = new Engine(document.querySelector('canvas'), true);
+
+      //Scene
+      const scene = new Scene(engine);
+
+      //Light
+      const light = new HemisphericLight('hemi_light', new Vector3(0, 1, 0), scene);
+      light.intensity = 0.85;
+
+      //Camera
+      const camera = new FreeCamera('camera', new Vector3(0, 6, -3.2));
+      camera.rotation = new Vector3(1, 0, 0);
+
+      //Player
+      const player = MeshBuilder.CreateBox('player', {size: 0.1, height: 0.2});
+      player.checkCollisions = true;
+      player.position.y = 1;
+      player.isPickable = false;
+
+      //Floor
+      const spriteSheetTexture = new Texture('./assets/sprite_sheet.png', scene),
+          assetsManager = new AssetsManager(scene),
+          tileMapFileTask = assetsManager.addTextFileTask('tile_map_data_task', './assets/map.json');
+      tileMapFileTask.onSuccess = (task) => {
+        const tileMapData = JSON.parse(task.text),
+            stageSize = new Vector2(3, 3),
+            floor = new SpriteMap(
+                'floor',
+                tileMapData,
+                spriteSheetTexture,
+                {
+                  stageSize: stageSize,
+                  baseTile: 128,
+                  flipU: true,
+                },
+                scene,
+            );
+
+        floor.changeTiles(0, new Vector2(0, 0), 0);
+        floor.changeTiles(0, new Vector2(1, 0), 0);
+        floor.changeTiles(0, new Vector2(1, 1), 0);
+        floor.changeTiles(0, new Vector2(1, 2), 0);
+
+        floor.position = new Vector3.Zero();
+        floor.rotation = new Vector3(Math.PI / 2, Math.PI / 4, 0);
+      };
+
+      assetsManager.load();
+
+      //Inputs
+      let inputMap = {};
+      scene.actionManager = new ActionManager(scene);
+      scene.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnKeyDownTrigger, (event) => {
+        inputMap[event.sourceEvent.key] = event.sourceEvent.type === 'keydown';
+      }));
+      scene.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnKeyUpTrigger, (event) => {
+        inputMap[event.sourceEvent.key] = event.sourceEvent.type === 'keydown';
+      }));
+
+      scene.onBeforeRenderObservable.add(() => {
+        if (inputMap['w']) {
+          player.position.z += 0.01
+          camera.position.z += 0.01
+        }
+
+        if (inputMap['a']) {
+          player.position.x -= 0.01
+          camera.position.x -= 0.01
+        }
+
+        if (inputMap['s']) {
+          player.position.z -= 0.01
+          camera.position.z -= 0.01
+        }
+
+        if (inputMap['d']) {
+          player.position.x += 0.01
+          camera.position.x += 0.01
+        }
+      });
+
+      this.renderGame(engine, scene);
+    },
+    renderGame(engine, scene) {
+      engine.runRenderLoop(() => {
+        scene.render();
+      });
+    },
+  },
+  mounted() {
+    this.initGame();
+  },
 };
 </script>
 
@@ -26,12 +125,8 @@ export default {
   height: 100%;
 }
 
-#gameMenu {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  margin: 10px;
-  border-radius: 10px;
+canvas {
+  width: 100%;
+  height: 100%;
 }
 </style>
