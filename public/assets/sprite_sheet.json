@@ -1,7 +1,7 @@
 {
   "frames": [
     {
-      "filename": "concrete-0.png",
+      "filename": "asphalt_0",
       "frame": {"x": 256, "y": 256, "w": 128, "h": 128},
       "rotated": false,
       "trimmed": false,
@@ -9,8 +9,16 @@
       "sourceSize": { "w": 128, "h": 128}
     },
     {
-      "filename": "grass-0.png",
+      "filename": "grass_0",
       "frame": {"x": 512, "y": 512, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    },
+    {
+      "filename": "blank",
+      "frame": {"x": 704, "y": 448, "w": 1, "h": 1},
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},

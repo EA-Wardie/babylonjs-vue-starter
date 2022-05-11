@@ -1,5 +1,8 @@
 <template>
-  <canvas></canvas>
+  <div>
+    <div id="fps"></div>
+    <canvas></canvas>
+  </div>
 </template>
 
 <script>
@@ -29,8 +32,8 @@ export default {
       light.intensity = 0.85;
 
       //Camera
-      const camera = new FreeCamera('camera', new Vector3(0, 6, -3.2));
-      camera.rotation = new Vector3(1, 0, 0);
+      const camera = new FreeCamera('camera', new Vector3(0, 6, -4.7));
+      camera.rotation = new Vector3(Math.PI / 4, 0, 0);
 
       //Player
       const player = MeshBuilder.CreateBox('player', {size: 0.1, height: 0.2});
@@ -41,7 +44,8 @@ export default {
       //Floor
       const spriteSheetTexture = new Texture('./assets/sprite_sheet.png', scene),
           assetsManager = new AssetsManager(scene),
-          tileMapFileTask = assetsManager.addTextFileTask('tile_map_data_task', './assets/map.json');
+          tileMapFileTask = assetsManager.addTextFileTask('tile_map_data_task', './assets/sprite_sheet.json'),
+          tileMapPositionTask = assetsManager.addTextFileTask('tile_map_position_task', './assets/tile_map.json');
       tileMapFileTask.onSuccess = (task) => {
         const tileMapData = JSON.parse(task.text),
             stageSize = new Vector2(3, 3),
@@ -57,10 +61,12 @@ export default {
                 scene,
             );
 
-        floor.changeTiles(0, new Vector2(0, 0), 0);
-        floor.changeTiles(0, new Vector2(1, 0), 0);
-        floor.changeTiles(0, new Vector2(1, 1), 0);
-        floor.changeTiles(0, new Vector2(1, 2), 0);
+        tileMapPositionTask.onSuccess = (task) => {
+          const tilePositions = JSON.parse(task.text);
+          tilePositions['tiles'].forEach(({tile, position}) => {
+            floor.changeTiles(0, new Vector2(position.x, position.y), tile);
+          });
+        }
 
         floor.position = new Vector3.Zero();
         floor.rotation = new Vector3(Math.PI / 2, Math.PI / 4, 0);
@@ -103,7 +109,10 @@ export default {
       this.renderGame(engine, scene);
     },
     renderGame(engine, scene) {
+      let divFps = document.getElementById("fps");
+
       engine.runRenderLoop(() => {
+        divFps.innerHTML = engine.getFps().toFixed() + " fps";
         scene.render();
       });
     },
@@ -128,5 +137,18 @@ export default {
 canvas {
   width: 100%;
   height: 100%;
+}
+
+#fps {
+  position: absolute;
+  background-color: black;
+  text-align: center;
+  font-size: 16px;
+  color: white;
+  top: 10px;
+  right: 10px;
+  width: 60px;
+  height: 20px;
+  font-weight: 700;
 }
 </style>
