@@ -1,0 +1,20 @@
+{
+  "frames": [
+    {
+      "filename": "concrete-0.png",
+      "frame": {"x": 256, "y": 256, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    },
+    {
+      "filename": "grass-0.png",
+      "frame": {"x": 512, "y": 512, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    }
+  ]
+}
