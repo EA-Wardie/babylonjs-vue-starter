@@ -1,0 +1,94 @@
+{
+  "frames": [
+    {
+      "id": 0,
+      "filename": "asphalt_line_right",
+      "frame": {"x": 0, "y": 256, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    },
+    {
+      "id": 1,
+      "filename": "asphalt_line_left",
+      "frame": {"x": 256, "y": 256, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    },
+    {
+      "id": 2,
+      "filename": "asphalt_line_top",
+      "frame": {"x": 128, "y": 0, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    },
+    {
+      "id": 3,
+      "filename": "asphalt_line_bottom",
+      "frame": {"x": 256, "y": 0, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    },
+    {
+      "id": 4,
+      "filename": "asphalt_line_top_right",
+      "frame": {"x": 0, "y": 0, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    },
+    {
+      "id": 5,
+      "filename": "asphalt_line_top_left",
+      "frame": {"x": 0, "y": 128, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    },
+    {
+      "id": 6,
+      "filename": "asphalt_line_bottom_right",
+      "frame": {"x": 256, "y": 128, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    },
+    {
+      "id": 7,
+      "filename": "asphalt_line_bottom_left",
+      "frame": {"x": 128, "y": 128, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    },
+    {
+      "id": 8,
+      "filename": "grass_0",
+      "frame": {"x": 384, "y": 256, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    },
+    {
+      "id": 9,
+      "filename": "grass_1",
+      "frame": {"x": 384, "y": 128, "w": 128, "h": 128},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128},
+      "sourceSize": { "w": 128, "h": 128}
+    }
+  ]
+}
